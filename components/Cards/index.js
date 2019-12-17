@@ -23,14 +23,23 @@ axios
   .then((res) => {
     // console.log(res)
     // console.log(res.data)
-    const theArticlesData = res.data.articles
-    console.log(res.data.articles)
+    // // or you could set multiple variables for each object within the object. ex. jsArticldes, nodeArticles, bootstrapArticles, etc.
+    // const theArticles = res.data.articles.javascript
+    // // the most awesome Michael Trew way:
+    const theArticles = Object.values(res.data.articles).flat() 
+    // console.log(theArticles)
+    theArticles.forEach(function(thingy) {
+      cardContain.appendChild(cardCreator(thingy))
+    })
   })
   .catch((err) => {
     console.log("Error: ", err)
   })
 
-function cardCreator(articleObject) {
+const cardContain = document.querySelector('div.cards-container')
+// console.log(cardContain)
+
+function cardCreator(article) {
 
   // createElement
   const card = document.createElement('div')
@@ -48,7 +57,7 @@ function cardCreator(articleObject) {
 
   // add textContent and img src
   headline.textContent = article.headline
-  img.src = article.authorPhoto
+  image.src = article.authorPhoto
   authorSpan.textContent = "By " + article.authorName
 
   // append
